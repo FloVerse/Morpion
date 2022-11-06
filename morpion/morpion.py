@@ -91,7 +91,7 @@ class Morpion :
         countP1 = 0
         countP2 = 0 
         p1 = Player('X')
-        p2 = Player('O')s
+        p2 = Player('O')
 
         while self.is_win() ==False and self.draw() == False :
             
