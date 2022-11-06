@@ -3,11 +3,12 @@ import re
 from tracemalloc import start
 from xmlrpc.client import Boolean
 from Player import Player
-#import pygame
+import pygame
 
 class Morpion : 
     def __init__(self) -> None:
         self.board = []
+        
 
     def create_board(self) : 
         for i in range(3):
@@ -80,6 +81,10 @@ class Morpion :
         
 
     def start(self) :
+        pygame.init()
+        window = pygame.display.set_mode((1280, 900))
+        grid = pygame.image.load("/img/grid.png").convert()
+        window.blit(grid, (0,0))
         countP1 = 0
         countP2 = 0 
         p1 = Player('X')
@@ -120,6 +125,6 @@ class Morpion :
             print("Player 1 wins this game !")
         elif countP2 == 1 :
             print("Player 2 wins this game !")
-            
+        #pygame.quit()
 
 
