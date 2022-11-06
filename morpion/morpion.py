@@ -82,13 +82,16 @@ class Morpion :
 
     def start(self) :
         pygame.init()
-        window = pygame.display.set_mode((1280, 900))
-        grid = pygame.image.load("/img/grid.png").convert()
-        window.blit(grid, (0,0))
+        pygame.display.set_caption("Morpion")
+        window = pygame.display.set_mode((600, 600))
+        #window.fill((0,0,0))
+        grid = pygame.image.load(r'C:\Users\Flo\Documents\Morpion\morpion\img\grid.png').convert_alpha()
+        window.blit(grid, (-100,0))
+        pygame.display.update()
         countP1 = 0
         countP2 = 0 
         p1 = Player('X')
-        p2 = Player('O')
+        p2 = Player('O')s
 
         while self.is_win() ==False and self.draw() == False :
             
