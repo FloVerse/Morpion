@@ -95,14 +95,15 @@ class Morpion :
     def start(self) :
         countP1 = 0
         countP2 = 0 
+        round = 0
         p1 = Player('X',r"C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\cross.png")
         p2 = Player('O',r"C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\circle.png")
         
         pygame.init()
         pygame.display.set_caption("Morpion")
+        screen = pygame.display.get_surface()
         window = pygame.display.set_mode((442, 437))
-        police = pygame.font.SysFont("monospace",15)
-        texteP1 = police.render("Player 1, that's your turn !", 1 , (1,1,1))
+        font = pygame.font.SysFont("monospace",15)
         grid = pygame.image.load(r'C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\grid.png').convert_alpha()
         cross = pygame.image.load(p1.getImg()).convert_alpha()
         circle = pygame.image.load(p2.getImg()).convert_alpha()
@@ -120,9 +121,14 @@ class Morpion :
                            pygame.Rect((160, 244), (85, 90)),# [2,1]
                            pygame.Rect((265, 244), (85, 90))]# [2,2]
         positions = self.associate(clickable_areas)
-
         while self.is_win()==False and self.draw() == False :    
-            window.blit(texteP1, (100,15))
+            if round%2== 0 :
+                texteRound = font.render("Player "+str(round%2)+" that's your turn", 0 , (0,0,0))
+                window.blit(texteRound, (100,15))
+            elif round%2 ==1 : 
+                texteRound.fill(pygame.Color("white"))
+                texteRound = font.render("edited", 0, pygame.Color("white"));
+                window.blit(texteRound, (100,15))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                      stop = True
@@ -137,10 +143,13 @@ class Morpion :
                                 cross,
                                 tuple(map(lambda i, j: i - j,area.center,(area.height/2,area.width/2)))
                             )
+                            round+=1
 
 
 
             pygame.display.update()
+            print(round)
+            
 
 
             """
