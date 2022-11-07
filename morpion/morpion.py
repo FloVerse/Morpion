@@ -79,37 +79,48 @@ class Morpion :
         if row > 2 or col > 2 : return False
         self.board[row][col] = carac
         
-
+    def associate(self,areas) : 
+        row = 0
+        col = 0  
+        positions = {}                   
+        for elem in areas : 
+            pos = str(elem)
+            positions[pos] = [row,col]
+            if col == 2 :
+                 col = 0
+                 row+=1
+            else : col+=1
+        return positions
+        
     def start(self) :
         countP1 = 0
         countP2 = 0 
-        p1 = Player('X',r"C:\Users\flori\Documents\Morpion-1\morpion\img\cross.png")
-        p2 = Player('O',r"C:\Users\flori\Documents\Morpion-1\morpion\img\circle.png")
+        p1 = Player('X',r"C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\cross.png")
+        p2 = Player('O',r"C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\circle.png")
         
         pygame.init()
         pygame.display.set_caption("Morpion")
         window = pygame.display.set_mode((442, 437))
         #window.fill((0,0,0))
-        grid = pygame.image.load(r'C:\Users\flori\Documents\Morpion-1\morpion\img\grid.png').convert_alpha()
+        grid = pygame.image.load(r'C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\grid.png').convert_alpha()
         cross = pygame.image.load(p1.getImg()).convert_alpha()
         circle = pygame.image.load(p2.getImg()).convert_alpha()
         window.blit(grid, (0,0))
 
-        clickable_areas = [pygame.Rect((69, 54), (85, 90)),
-                           pygame.Rect((160, 54), (85, 90)),
-                           pygame.Rect((265, 54), (85, 90)),
+        clickable_areas = [pygame.Rect((69, 54), (85, 90)), # [0,0]
+                           pygame.Rect((160, 54), (85, 90)), # [0,1]
+                           pygame.Rect((265, 54), (85, 90)), # [0,2]
                            
-                           pygame.Rect((69,150 ), (85, 90)),
-                           pygame.Rect((160, 150), (85, 90)),
-                           pygame.Rect((265, 150), (85, 90)),
+                           pygame.Rect((69,150 ), (85, 90)), # [1,0]
+                           pygame.Rect((160, 150), (85, 90)),# [1,1]
+                           pygame.Rect((265, 150), (85, 90)),# [1,2]
                            
-                           pygame.Rect((69, 244), (85, 90)),
-                           pygame.Rect((160, 244), (85, 90)),
-                           pygame.Rect((265, 244), (85, 90))]
+                           pygame.Rect((69, 244), (85, 90)), # [2,0]
+                           pygame.Rect((160, 244), (85, 90)),# [2,1]
+                           pygame.Rect((265, 244), (85, 90))]# [2,2]
+        positions = self.associate(clickable_areas)
 
-        while self.is_win()==False and self.draw() == False :
-
-            
+        while self.is_win()==False and self.draw() == False :      
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                      stop = True
@@ -118,7 +129,7 @@ class Morpion :
                     pos = pygame.mouse.get_pos()
                     for area in clickable_areas : 
                         if area.collidepoint(pos):
-                            self.entry(row,col,p1.getCarac())
+                            #self.entry(row,col,p1.getCarac())
                             self.display()
                             window.blit(
                                 cross,

@@ -12,7 +12,7 @@ for row in game.board :
 #game.entry(0,0,'X')
 #game.display()
 game.start()
-
+#game.display()
 #test gain game.entry(0,1,'X') game.entry(1,1,'X') game.entry(2,1,'X')
 
 #pip install pygame --pre
