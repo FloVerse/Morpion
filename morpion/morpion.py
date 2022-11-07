@@ -27,6 +27,7 @@ class Morpion :
         bool = False 
         for row in self.board : 
             if row.count("-") == 0 :
+                print(row.count("-"))
                 bool = True
             else :
                 bool = False
@@ -75,9 +76,18 @@ class Morpion :
     def display(self) :
         for row in self.board : print(row)
 
+    def getCase(self,row,col) :
+        return self.board[row][col]
+
+
     def entry(self,row,col,carac) -> Boolean :
         if row > 2 or col > 2 : return False
-        self.board[row][col] = carac
+        if  self.getCase(row,col) == '-' :
+            self.board[row][col] = carac
+            return True
+        else : 
+            print("There is already a symbol.")
+            return False
         
     def associate(self,areas) : 
         row = 0
@@ -101,7 +111,6 @@ class Morpion :
         
         pygame.init()
         pygame.display.set_caption("Morpion")
-        screen = pygame.display.get_surface()
         window = pygame.display.set_mode((442, 437))
         font = pygame.font.SysFont("monospace",15)
         grid = pygame.image.load(r'C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\grid.png').convert_alpha()
@@ -124,14 +133,14 @@ class Morpion :
         positions = self.associate(clickable_areas)
         while self.is_win()==False and self.draw() == False :    
             if round%2== 0 :
-                erase = font.render("Player "+str((round+1)%2)+" that's your turn", 0 ,  pygame.Color("white"))
+                erase = font.render("Player 2 that's your turn", 0 ,  pygame.Color("white"))
                 window.blit(erase, (100,15))
-                texteRound = font.render("Player "+str(round%2)+" that's your turn", 0 ,  pygame.Color("black"))
+                texteRound = font.render("Player 1 that's your turn", 0 ,  pygame.Color("black"))
                 window.blit(texteRound, (100,15))
             elif round%2 ==1 : 
-                erase = font.render("Player "+str((round+1)%2)+" that's your turn", 0 ,  pygame.Color("white"))
+                erase = font.render("Player 1 that's your turn", 0 ,  pygame.Color("white"))
                 window.blit(erase, (100,15))
-                texteRound = font.render("Player "+str(round%2)+" that's your turn", 0, pygame.Color("black"));
+                texteRound = font.render("Player 2 that's your turn", 0, pygame.Color("black"));
                 window.blit(texteRound, (100,15))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -141,18 +150,30 @@ class Morpion :
                     for area in clickable_areas : 
                         areastr = str(area)
                         if area.collidepoint(pos):
-                            self.entry(positions[areastr][0],positions[areastr][1],p1.getCarac())
-                            self.display()
-                            window.blit(
-                                cross,
-                                tuple(map(lambda i, j: i - j,area.center,(area.height/2,area.width/2)))
-                            )
-                            round+=1
-
-
-
+                            case = self.getCase(positions[areastr][0],positions[areastr][1])
+                            if round%2 == 0 : 
+                                if case == '-' :
+                                    self.entry(positions[areastr][0],positions[areastr][1],p1.getCarac())
+                                    self.display()
+                                    window.blit(
+                                        cross,
+                                        tuple(map(lambda i, j: i - j,area.center,(area.height/2,area.width/2)))
+                                    )
+                                    round+=1
+                                    if self.is_win() :countP1+=1
+                            
+                            else : 
+                                if case == '-' :  
+                                    self.entry(positions[areastr][0],positions[areastr][1],p2.getCarac())
+                                    self.display()
+                                    window.blit(
+                                        circle,
+                                        tuple(map(lambda i, j: i - j,area.center,(area.height/2,area.width/2)))
+                                    )
+                                    round+=1
+                                    if self.is_win() :countP2+=1
+                                
             pygame.display.update()
-            print(round)
             
 
 
