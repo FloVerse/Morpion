@@ -108,6 +108,7 @@ class Morpion :
         cross = pygame.image.load(p1.getImg()).convert_alpha()
         circle = pygame.image.load(p2.getImg()).convert_alpha()
         window.blit(grid, (0,0))
+        texteRound = font.render("Player "+str(round%2)+" that's your turn", 0 , (0,0,0))
 
         clickable_areas = [pygame.Rect((69, 54), (85, 90)), # [0,0]
                            pygame.Rect((160, 54), (85, 90)), # [0,1]
@@ -123,11 +124,14 @@ class Morpion :
         positions = self.associate(clickable_areas)
         while self.is_win()==False and self.draw() == False :    
             if round%2== 0 :
-                texteRound = font.render("Player "+str(round%2)+" that's your turn", 0 , (0,0,0))
+                erase = font.render("Player "+str((round+1)%2)+" that's your turn", 0 ,  pygame.Color("white"))
+                window.blit(erase, (100,15))
+                texteRound = font.render("Player "+str(round%2)+" that's your turn", 0 ,  pygame.Color("black"))
                 window.blit(texteRound, (100,15))
             elif round%2 ==1 : 
-                texteRound.fill(pygame.Color("white"))
-                texteRound = font.render("edited", 0, pygame.Color("white"));
+                erase = font.render("Player "+str((round+1)%2)+" that's your turn", 0 ,  pygame.Color("white"))
+                window.blit(erase, (100,15))
+                texteRound = font.render("Player "+str(round%2)+" that's your turn", 0, pygame.Color("black"));
                 window.blit(texteRound, (100,15))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
