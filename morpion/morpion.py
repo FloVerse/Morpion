@@ -144,7 +144,7 @@ class Morpion :
                 window.blit(texteRound, (100,15))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
-                     stop = True
+                     pygame.quit()
                 elif event.type == pygame.MOUSEBUTTONUP :
                     pos = pygame.mouse.get_pos()
                     for area in clickable_areas : 
@@ -174,36 +174,7 @@ class Morpion :
                                     if self.is_win() :countP2+=1
                                 
             pygame.display.update()
-            
-
-
-            """
-            self.display()
-            #Player 1 round
-            if self.is_win() ==False and self.draw() == False :
-                print("Player 1, that's your turn!\n")
-                rowCH = input("Choose the row\n")
-                row = int(rowCH)
-                colCH = input("Choose the column\n")
-                col = int(colCH)
-                while row > 2 : row = int(input("Choose the row\n"))
-                while col > 2 : col = int(input("Choose the column\n"))
-                self.entry(row,col,p1.getCarac())
-                if self.is_win() :countP1+=1
-
-            self.display()
-            #Player 2 round
-            if self.is_win() ==False and self.draw() == False :
-                print("Player 2, that's your turn!\n")
-                rowCH = input("Choose the row\n")
-                row = int(rowCH)
-                colCH = input("Choose the column\n")
-                col = int(colCH)
-                while row > 2 : row = input("Choose the row")
-                while col > 2 : col = input("Choose the column")
-                self.entry(row,col,p2.getCarac())
-                if self.is_win() : countP2+=1
-        """    
+             
         if self.draw() == True:
             self.display()
             print("Draw !")  
@@ -211,6 +182,6 @@ class Morpion :
             print("Player 1 wins this game !")
         elif countP2 == 1 :
             print("Player 2 wins this game !")
-        pygame.quit()
+       # pygame.quit()
 
 
