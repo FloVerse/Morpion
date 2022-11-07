@@ -81,23 +81,55 @@ class Morpion :
         
 
     def start(self) :
-        pygame.init()
-        pygame.display.set_caption("Morpion")
-        window = pygame.display.set_mode((600, 600))
-        #window.fill((0,0,0))
-        grid = pygame.image.load(r'C:\Users\Flo\Documents\Morpion\morpion\img\grid.png').convert_alpha()
-        window.blit(grid, (-100,0))
-        pygame.display.update()
         countP1 = 0
         countP2 = 0 
-        p1 = Player('X')
-        p2 = Player('O')
+        p1 = Player('X',r"C:\Users\flori\Documents\Morpion-1\morpion\img\cross.png")
+        p2 = Player('O',r"C:\Users\flori\Documents\Morpion-1\morpion\img\circle.png")
+        
+        pygame.init()
+        pygame.display.set_caption("Morpion")
+        window = pygame.display.set_mode((442, 437))
+        #window.fill((0,0,0))
+        grid = pygame.image.load(r'C:\Users\flori\Documents\Morpion-1\morpion\img\grid.png').convert_alpha()
+        cross = pygame.image.load(p1.getImg()).convert_alpha()
+        circle = pygame.image.load(p2.getImg()).convert_alpha()
+        window.blit(grid, (0,0))
 
-        while self.is_win() ==False and self.draw() == False :
+        clickable_area = pygame.Rect((69, 54), (85, 90))
+
+
+
+
+
+
+
+
+
+
+        while self.is_win()==False and self.draw() == False :
+
             
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                     stop = True
+       
+                elif event.type == pygame.MOUSEBUTTONUP :
+                    pos = pygame.mouse.get_pos()
+                    if clickable_area.collidepoint(pos):
+                        window.blit(
+                            cross,
+                            tuple(map(lambda i, j: i - j,clickable_area.center,(clickable_area.height/2,clickable_area.width/2)))
+                            )
+
+
+
+            pygame.display.update()
+
+
+            """
             self.display()
             #Player 1 round
-            if countP1 >= countP2 :
+            if self.is_win() ==False and self.draw() == False :
                 print("Player 1, that's your turn!\n")
                 rowCH = input("Choose the row\n")
                 row = int(rowCH)
@@ -120,7 +152,7 @@ class Morpion :
                 while col > 2 : col = input("Choose the column")
                 self.entry(row,col,p2.getCarac())
                 if self.is_win() : countP2+=1
-            
+        """    
         if self.draw() == True:
             self.display()
             print("Draw !")  
@@ -128,6 +160,6 @@ class Morpion :
             print("Player 1 wins this game !")
         elif countP2 == 1 :
             print("Player 2 wins this game !")
-        #pygame.quit()
+        pygame.quit()
 
 
