@@ -101,7 +101,8 @@ class Morpion :
         pygame.init()
         pygame.display.set_caption("Morpion")
         window = pygame.display.set_mode((442, 437))
-        #window.fill((0,0,0))
+        police = pygame.font.SysFont("monospace",15)
+        texteP1 = police.render("Player 1, that's your turn !", 1 , (1,1,1))
         grid = pygame.image.load(r'C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\grid.png').convert_alpha()
         cross = pygame.image.load(p1.getImg()).convert_alpha()
         circle = pygame.image.load(p2.getImg()).convert_alpha()
@@ -120,16 +121,17 @@ class Morpion :
                            pygame.Rect((265, 244), (85, 90))]# [2,2]
         positions = self.associate(clickable_areas)
 
-        while self.is_win()==False and self.draw() == False :      
+        while self.is_win()==False and self.draw() == False :    
+            window.blit(texteP1, (100,15))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                      stop = True
-       
                 elif event.type == pygame.MOUSEBUTTONUP :
                     pos = pygame.mouse.get_pos()
                     for area in clickable_areas : 
+                        areastr = str(area)
                         if area.collidepoint(pos):
-                            #self.entry(row,col,p1.getCarac())
+                            self.entry(positions[areastr][0],positions[areastr][1],p1.getCarac())
                             self.display()
                             window.blit(
                                 cross,
