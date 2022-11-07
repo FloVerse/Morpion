@@ -107,15 +107,6 @@ class Morpion :
                            pygame.Rect((160, 244), (85, 90)),
                            pygame.Rect((265, 244), (85, 90))]
 
-
-
-
-
-
-
-
-
-
         while self.is_win()==False and self.draw() == False :
 
             
@@ -127,6 +118,8 @@ class Morpion :
                     pos = pygame.mouse.get_pos()
                     for area in clickable_areas : 
                         if area.collidepoint(pos):
+                            self.entry(row,col,p1.getCarac())
+                            self.display()
                             window.blit(
                                 cross,
                                 tuple(map(lambda i, j: i - j,area.center,(area.height/2,area.width/2)))
