@@ -95,7 +95,17 @@ class Morpion :
         circle = pygame.image.load(p2.getImg()).convert_alpha()
         window.blit(grid, (0,0))
 
-        clickable_area = pygame.Rect((69, 54), (85, 90))
+        clickable_areas = [pygame.Rect((69, 54), (85, 90)),
+                           pygame.Rect((160, 54), (85, 90)),
+                           pygame.Rect((265, 54), (85, 90)),
+                           
+                           pygame.Rect((69,150 ), (85, 90)),
+                           pygame.Rect((160, 150), (85, 90)),
+                           pygame.Rect((265, 150), (85, 90)),
+                           
+                           pygame.Rect((69, 244), (85, 90)),
+                           pygame.Rect((160, 244), (85, 90)),
+                           pygame.Rect((265, 244), (85, 90))]
 
 
 
@@ -115,10 +125,11 @@ class Morpion :
        
                 elif event.type == pygame.MOUSEBUTTONUP :
                     pos = pygame.mouse.get_pos()
-                    if clickable_area.collidepoint(pos):
-                        window.blit(
-                            cross,
-                            tuple(map(lambda i, j: i - j,clickable_area.center,(clickable_area.height/2,clickable_area.width/2)))
+                    for area in clickable_areas : 
+                        if area.collidepoint(pos):
+                            window.blit(
+                                cross,
+                                tuple(map(lambda i, j: i - j,area.center,(area.height/2,area.width/2)))
                             )
 
 
