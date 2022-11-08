@@ -27,7 +27,6 @@ class Morpion :
         bool = False 
         for row in self.board : 
             if row.count("-") == 0 :
-                print(row.count("-"))
                 bool = True
             else :
                 bool = False
@@ -106,18 +105,20 @@ class Morpion :
         countP1 = 0
         countP2 = 0 
         round = 0
-        p1 = Player('X',r"C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\cross.png")
-        p2 = Player('O',r"C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\circle.png")
+        p1 = Player('X',r"C:\Users\flori\Documents\morpion\Morpion\morpion\img\cross.png")
+        p2 = Player('O',r"C:\Users\flori\Documents\morpion\Morpion\morpion\img\circle.png")
         
         pygame.init()
+        stop = False
         pygame.display.set_caption("Morpion")
         window = pygame.display.set_mode((442, 437))
         font = pygame.font.SysFont("monospace",15)
-        grid = pygame.image.load(r'C:\Users\Flo\Documents\Morpion\Morpion\morpion\img\grid.png').convert_alpha()
+        textRestart = font.render("Press Space to play again.",1,pygame.Color("black"))
+        grid = pygame.image.load(r'C:\Users\flori\Documents\morpion\Morpion\morpion\img\grid.png').convert_alpha()
+        win =  pygame.image.load(r'C:\Users\flori\Documents\morpion\Morpion\morpion\img\win.png').convert_alpha()
         cross = pygame.image.load(p1.getImg()).convert_alpha()
         circle = pygame.image.load(p2.getImg()).convert_alpha()
         window.blit(grid, (0,0))
-        texteRound = font.render("Player "+str(round%2)+" that's your turn", 0 , (0,0,0))
 
         clickable_areas = [pygame.Rect((69, 54), (85, 90)), # [0,0]
                            pygame.Rect((160, 54), (85, 90)), # [0,1]
@@ -131,7 +132,7 @@ class Morpion :
                            pygame.Rect((160, 244), (85, 90)),# [2,1]
                            pygame.Rect((265, 244), (85, 90))]# [2,2]
         positions = self.associate(clickable_areas)
-        while self.is_win()==False and self.draw() == False :    
+        while not stop :#self.is_win()==False and self.draw() == False :    
             if round%2== 0 :
                 erase = font.render("Player 2 that's your turn", 0 ,  pygame.Color("white"))
                 window.blit(erase, (100,15))
@@ -172,16 +173,36 @@ class Morpion :
                                     )
                                     round+=1
                                     if self.is_win() :countP2+=1
+                    if self.draw() == True:
+                        self.display()
+                        print("Draw !")  
+                    elif countP1 == 1 :
+                        print("Player 1 wins this game !")
+                        erase = font.render("Player 1 that's your turn", 0 ,  pygame.Color("white"))
+                        window.blit(win, (0,0))
+                        window.blit(erase, (100,15))
+                        textWin = font.render("Player 1 yon won this game ! \n\n Press Space to play again.", 0 ,  pygame.Color("black"))
+                        window.blit(textWin, (100,150))
+                        window.blit(textRestart, (100,250))
+                        if event.type == pygame.K_SPACE : 
+                            self.start()
+                            print("restart")
+
+                    elif countP2 == 1 :
+                        print("Player 2 wins this game !")
+                        erase = font.render("Player 1 that's your turn", 0 ,  pygame.Color("white"))
+                        window.blit(win, (0,0))
+                        window.blit(erase, (100,15))
+                        textWin = font.render("Player 2 yon won this game !", 0 ,  pygame.Color("black"))
+                        window.blit(textWin, (100,150))
+                        window.blit(textRestart, (100,250))
+                        if event.type == pygame.K_SPACE :
+                            self.start()
+                            print("restart")
                                 
             pygame.display.update()
              
-        if self.draw() == True:
-            self.display()
-            print("Draw !")  
-        elif countP1 == 1 :
-            print("Player 1 wins this game !")
-        elif countP2 == 1 :
-            print("Player 2 wins this game !")
+        
        # pygame.quit()
 
 
